@@ -7,14 +7,38 @@ import { useState } from 'react';
 
 export default function Start() {
   const [isChecked, setChecked] = useState(false);
+  const [userName, setUserName] = useState('');
+  function hasNumber(input) {
+    for (let i = 0; i < input.length; i++) {
+        if (!isNaN(input[i])) {
+            return true;
+        }
+    }
+    return false;
+  }
+
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Name</Text>
-      <TextInput style={styles.textInput}></TextInput>      
-      <Text style={styles.text}>Email Address</Text>
-      <TextInput style={styles.textInput}></TextInput>
-      <Text style={styles.text}>Phone Number</Text>
-      <TextInput style={styles.textInput}></TextInput>
+
+      <View style={styles.item}>
+        <Text style={styles.text}>Name</Text>
+        <TextInput
+          style={styles.textInput}
+          autoFocus={true}
+          value={userName}
+          onChangeText={(inputUserName) => setUserName(inputUserName)}
+          keyboardType="default"
+        />
+        {(userName.length < 2 || hasNumber(userName)) && (<Text>Please enter a valid name</Text>)}   
+      </View>
+      <View style={styles.item}>
+        <Text style={styles.text}>Email Address</Text>
+        <TextInput style={styles.textInput}></TextInput>
+      </View>
+      <View style={styles.item}>
+        <Text style={styles.text}>Phone Number</Text>
+        <TextInput style={styles.textInput}></TextInput>
+      </View>
       <View style={{flexDirection: 'row', gap: 20}}>
       <Checkbox
         value={isChecked}
@@ -38,13 +62,16 @@ const styles = StyleSheet.create({
     padding: 20,
     borderRadius: 10,
   },
+  item: {
+    marginBottom: 50,
+  },
   text: {
     color: Colors.primary,
     fontSize: 15,
+    marginBottom: 20,
   },
   textInput: {
-    padding: 20,
-    marginBottom: 50,
+    marginTop: 10,
     borderBottomWidth: 2,
     borderBottomColor: Colors.primary,
   },
