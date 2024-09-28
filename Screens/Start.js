@@ -1,9 +1,10 @@
-import { StyleSheet, Text, TextInput, View } from 'react-native'
+import { StyleSheet, Text, TextInput, View, Button } from 'react-native'
 import React from 'react'
 import Checkbox from 'expo-checkbox';
-import Button from '../Components/Button';
+//import Button from '../Components/Button';
 import Colors from '../helper';
 import { useState } from 'react';
+
 
 export default function Start() {
   const [isChecked, setChecked] = useState(false);
@@ -32,6 +33,15 @@ export default function Start() {
     }
     return true;
   }
+  function handleRegister() {
+    console.log('Register pressed');
+  }
+  function handleReset() {
+    setName('');
+    setEmail('');
+    setPhone('');
+  }
+
 
   return (
     <View style={styles.container}>
@@ -76,7 +86,9 @@ export default function Start() {
       />
       <Text>I am not a robot</Text>
       </View>
-      <View style={{flexDirection: 'row', gap: 20} }>
+      <View style={styles.buttonArea }>
+        <Button title="Reset" color={Colors.cancel} onPress={handleReset}/>
+        <Button title="Register" color={Colors.ok} onPress={handleRegister} disabled={!isChecked}/>
 
       </View>
     </View>
@@ -86,19 +98,19 @@ export default function Start() {
 const styles = StyleSheet.create({
   container: {
     // flex: 1,
-    backgroundColor: 'silver',
+    backgroundColor: 'gray',
     width: '80%',
     justifyContent: 'center',
     padding: 20,
     borderRadius: 10,
   },
   item: {
-    marginBottom: 50,
+    marginBottom: 40,
   },
   text: {
     color: Colors.primary,
     fontSize: 15,
-    marginBottom: 20,
+    marginBottom: 10,
   },
   textInput: {
     textAlign: 'center',
@@ -107,4 +119,9 @@ const styles = StyleSheet.create({
     borderBottomColor: Colors.primary,
     fontWeight: 'bold',
   },
+  buttonArea: {
+    padding: 20,
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+  }
 })

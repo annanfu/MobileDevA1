@@ -6,7 +6,7 @@ function handler() {
     console.log('Button pressed')
 }
   return (
-    <Button title="Press me" onPress={handler} styles={styles.button}/>
+    <Button title={buttonTitle} onPress={handler} styles={styles.button}/>
   )
 }
 
