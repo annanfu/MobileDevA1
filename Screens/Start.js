@@ -47,7 +47,7 @@ export default function Start( { registerHandler } ) {
   }
   function handleRegister() {
     if (validateName(name) && validateEmail(email) && validatePhone(phone)) {
-      registerHandler();
+      registerHandler([name, email, phone]);
     } else {
     Alert.alert('Invalid Input', 'Check the input values', [{text: 'OK'}]);
     }

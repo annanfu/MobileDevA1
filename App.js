@@ -9,9 +9,11 @@ import { useState } from 'react';
 
 export default function App() {
   const [confirmVisibility, setConfirmVisibility] = useState(false);
-  function handleRegister() {
+  const [user, setUser] = useState([]);
+  function handleRegister([name, email, phone]) {
     console.log("Register button pressed");    
     setConfirmVisibility(true);
+    setUser([name, email, phone]);
   }
 
 
@@ -25,9 +27,12 @@ export default function App() {
           <Text style={styles.text}>Welcome</Text>
         </View>
         <View style={styles.bottomView}>
-          <Start registerHandler={handleRegister}/>
+          <Start
+            registerHandler={handleRegister}
+            />
           <Confirm
             confirmVisibility={confirmVisibility}
+            userInfo={user}
           />
         </View>
       </LinearGradient>
