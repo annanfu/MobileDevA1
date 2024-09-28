@@ -3,8 +3,10 @@ import React from 'react'
 import Colors from '../helper';
 import { LinearGradient } from 'expo-linear-gradient';
 
-export default function Confirm({confirmVisibility, userInfo}) {
-
+export default function Confirm({confirmVisibility, userInfo, gobackHandler}) {
+    function handleGoback() {
+       gobackHandler();
+    }
     
   return (
     <Modal visible={confirmVisibility} animationType="slide" transparent={true}>
@@ -19,7 +21,7 @@ export default function Confirm({confirmVisibility, userInfo}) {
           <Text style={styles.text}>If it is not correct, please go back and edit them.</Text>
 
         <View style={styles.buttonArea }>
-            <Button title="Go back" color={Colors.cancel}/>
+            <Button title="Go back" color={Colors.cancel} onPress={handleGoback}/>
             <Button title="Continue" color={Colors.ok}/>
 
         </View>

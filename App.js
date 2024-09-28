@@ -15,8 +15,9 @@ export default function App() {
     setConfirmVisibility(true);
     setUser([name, email, phone]);
   }
-
-
+  function handleGoback() {
+    setConfirmVisibility(false);
+  }
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style="auto" />
@@ -33,6 +34,7 @@ export default function App() {
           <Confirm
             confirmVisibility={confirmVisibility}
             userInfo={user}
+            gobackHandler={handleGoback}
           />
         </View>
       </LinearGradient>
