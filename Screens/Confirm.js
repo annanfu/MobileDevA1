@@ -1,13 +1,16 @@
 import { StyleSheet, Text, View, Modal, Button } from 'react-native'
 import React from 'react'
 import Colors from '../helper';
+import { LinearGradient } from 'expo-linear-gradient';
 
 export default function Confirm({confirmVisibility, userInfo}) {
 
     
   return (
-    <Modal visible={confirmVisibility} animationType="slide" transparent={true} >
-      <View style={styles.container}>
+    <Modal visible={confirmVisibility} animationType="slide" transparent={true}>
+              <View style={styles.container}>
+    <LinearGradient colors={[Colors.backgroundTop, Colors.backgroundBottom]} style={styles.background}>
+
         <View style={styles.innerContainer}>
           <Text style={styles.text}>Hello {userInfo[0]}</Text>
           <Text style={styles.text}>Here is the information you entered:</Text>
@@ -21,7 +24,9 @@ export default function Confirm({confirmVisibility, userInfo}) {
 
         </View>
         </View>        
-      </View>
+
+        </LinearGradient>
+              </View>
     </Modal>
   )
 }
@@ -31,7 +36,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'rgba(0,0,0,0)',
   },
   innerContainer: {
     backgroundColor: Colors.containerBackground,
@@ -41,13 +45,22 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     width: '90%',
   },
-    buttonArea: {
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-        padding: 10,
-    },
+  buttonArea: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    padding: 10,
+  },
     text: {
         color: Colors.primary,
         fontSize: 15,
     },
+    background: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 })
