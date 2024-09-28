@@ -4,8 +4,17 @@ import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import Start from './Screens/Start';
 import Colors from './helper';
+import Confirm from './Screens/Confirm';
+import { useState } from 'react';
 
 export default function App() {
+  const [confirmVisibility, setConfirmVisibility] = useState(false);
+  function handleRegister() {
+    console.log("Register button pressed");    
+    setConfirmVisibility(true);
+  }
+
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style="auto" />
@@ -13,13 +22,13 @@ export default function App() {
       colors={[Colors.backgroundTop, Colors.backgroundBottom]}
       style={styles.background}>  
         <View style={styles.topView}>
-      
           <Text style={styles.text}>Welcome</Text>
-
-
         </View>
         <View style={styles.bottomView}>
-          <Start />
+          <Start registerHandler={handleRegister}/>
+          <Confirm
+            confirmVisibility={confirmVisibility}
+          />
         </View>
       </LinearGradient>
     </SafeAreaView>

@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TextInput, View, Button } from 'react-native'
+import { StyleSheet, Text, TextInput, View, Button, Alert } from 'react-native'
 import React from 'react'
 import Checkbox from 'expo-checkbox';
 //import Button from '../Components/Button';
@@ -6,7 +6,7 @@ import Colors from '../helper';
 import { useState } from 'react';
 
 
-export default function Start() {
+export default function Start( { registerHandler } ) {
   const [isChecked, setChecked] = useState(false);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -18,6 +18,18 @@ export default function Start() {
         }
     }
     return false;
+  }
+  function validateName(input) {
+    if (input.length < 2 || hasNumber(input)) {
+        return false;
+    }
+    return true;
+  }
+  function validateEmail(input) {
+    if (!(input.includes('@') && input.includes('.'))) {
+        return false;
+    }
+    return true;
   }
   function validatePhone(input) {
     if (input.length !== 10) {
@@ -34,7 +46,11 @@ export default function Start() {
     return true;
   }
   function handleRegister() {
-    console.log('Register pressed');
+    if (validateName(name) && validateEmail(email) && validatePhone(phone)) {
+      registerHandler();
+    } else {
+    Alert.alert('Invalid Input', 'Check the input values', [{text: 'OK'}]);
+    }
   }
   function handleReset() {
     setName('');
@@ -55,7 +71,7 @@ export default function Start() {
           onChangeText={(inputText) => setName(inputText)}
           keyboardType="default"
         />
-        {(name.length > 0 && name.length < 2 || hasNumber(name)) && (<Text>Please enter a valid name</Text>)}   
+        {(name.length > 0 && !validateName(name)) && (<Text>Please enter a valid name</Text>)}   
       </View>
       <View style={styles.item}>
         <Text style={styles.text}>Email Address</Text>
@@ -66,7 +82,7 @@ export default function Start() {
           onChangeText={(inputText) => setEmail(inputText)}
           keyboardType="email-address"
         />
-        {(email.length > 0 && !(email.includes('@') && email.includes('.'))) && (<Text>Please enter a valid email</Text>)}  
+        {(email.length > 0 && !validateEmail(email)) && (<Text>Please enter a valid email</Text>)}  
       </View>
       <View style={styles.item}>
         <Text style={styles.text}>Phone Number</Text>
@@ -98,7 +114,7 @@ export default function Start() {
 const styles = StyleSheet.create({
   container: {
     // flex: 1,
-    backgroundColor: 'gray',
+    backgroundColor: Colors.containerBackground,
     width: '80%',
     justifyContent: 'center',
     padding: 20,
