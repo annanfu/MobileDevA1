@@ -7,7 +7,9 @@ import { useState } from 'react';
 
 export default function Start() {
   const [isChecked, setChecked] = useState(false);
-  const [userName, setUserName] = useState('');
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
   function hasNumber(input) {
     for (let i = 0; i < input.length; i++) {
         if (!isNaN(input[i])) {
@@ -15,6 +17,20 @@ export default function Start() {
         }
     }
     return false;
+  }
+  function validatePhone(input) {
+    if (input.length !== 10) {
+        return false;
+    }
+    for (let i = 0; i < input.length; i++) {
+        if (isNaN(input[i])) {
+            return false;
+        }
+    }
+    if (input[9] === '0' || input[9] === '1') {
+        return false;
+    }
+    return true;
   }
 
   return (
@@ -25,19 +41,33 @@ export default function Start() {
         <TextInput
           style={styles.textInput}
           autoFocus={true}
-          value={userName}
-          onChangeText={(inputUserName) => setUserName(inputUserName)}
+          value={name}
+          onChangeText={(inputText) => setName(inputText)}
           keyboardType="default"
         />
-        {(userName.length < 2 || hasNumber(userName)) && (<Text>Please enter a valid name</Text>)}   
+        {(name.length > 0 && name.length < 2 || hasNumber(name)) && (<Text>Please enter a valid name</Text>)}   
       </View>
       <View style={styles.item}>
         <Text style={styles.text}>Email Address</Text>
-        <TextInput style={styles.textInput}></TextInput>
+        <TextInput
+          style={styles.textInput}
+          autoFocus={true}
+          value={email}
+          onChangeText={(inputText) => setEmail(inputText)}
+          keyboardType="email-address"
+        />
+        {(email.length > 0 && !(email.includes('@') && email.includes('.'))) && (<Text>Please enter a valid email</Text>)}  
       </View>
       <View style={styles.item}>
         <Text style={styles.text}>Phone Number</Text>
-        <TextInput style={styles.textInput}></TextInput>
+        <TextInput
+          style={styles.textInput}
+          autoFocus={true}
+          value={phone}
+          onChangeText={(inputText) => setPhone(inputText)}
+          keyboardType="email-address"
+        />
+        {(phone.length > 0 && !validatePhone(phone)) && (<Text>Please enter a valid phone number</Text>)}  
       </View>
       <View style={{flexDirection: 'row', gap: 20}}>
       <Checkbox
@@ -71,8 +101,10 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   textInput: {
+    textAlign: 'center',
     marginTop: 10,
     borderBottomWidth: 2,
     borderBottomColor: Colors.primary,
+    fontWeight: 'bold',
   },
 })
