@@ -12,6 +12,8 @@ export default function App() {
   const [confirmVisibility, setConfirmVisibility] = useState(false);
   const [user, setUser] = useState([]);
   const [gameVisibility, setGameVisibility] = useState(false);
+  let restart = false;
+
   function handleRegister([name, email, phone]) {
     setConfirmVisibility(true);
     setUser([name, email, phone]);
@@ -23,9 +25,15 @@ export default function App() {
     setConfirmVisibility(false);
     setGameVisibility(true);
   }
+  function handleRestart() {
+    setGameVisibility(false);
+    setConfirmVisibility(false);
+    setUser([]);
+    restart = true;
+  }
   if (gameVisibility) {
     return (
-      <Game userInfo={user}/>
+      <Game userInfo={user} restartHandler={handleRestart} />
     );
   }
   return (
@@ -40,6 +48,7 @@ export default function App() {
         <View style={styles.bottomView}>
           <Start
             registerHandler={handleRegister}
+            restartHandler={restart}
             />
           <Confirm
             confirmVisibility={confirmVisibility}

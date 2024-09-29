@@ -4,7 +4,7 @@ import Colors from "../helper";
 import { LinearGradient } from "expo-linear-gradient";
 import { useState } from "react";
 
-export default function Game({ userInfo }) {
+export default function Game({ userInfo, restartHandler }) {
   const [startGame, setStartGame] = useState(true);
   const [number, setNumber] = useState(0);
   const [playGame, setPlayGame] = useState(false);
@@ -80,6 +80,13 @@ export default function Game({ userInfo }) {
   }
 function handleSubmit() {
   setAttempts((prevAttempts) => prevAttempts - 1);
+   if (attempts === 0) {
+     console.log("You are out of attempts");
+     setEndGame("You are out of attempts");
+     setPlayGame(false);
+     clearInterval(timerId);
+     return;
+   }     
   if (!validateInput(guess)) {
     Alert.alert("Invalid number!", `Number has to be a multiply of ${userInfo[2][9]} between 1 and 100.`, [
       { text: "Okay" },
@@ -129,6 +136,24 @@ function handleSubmit() {
     setPrompt("");
     setEndGame("Game Over");
   }
+  function handleRestart() {
+    clearInterval(timerId);
+    setNumber(randomNumber());
+    setStartGame(false);
+    setPlayGame(false);
+    setAttempts(4);
+    setTime(60);
+    setGuess("");
+    setPrompt("");
+    setHint("");
+    setEndGame("");
+    setWin(false);
+    restartHandler();
+  }
+
+
+
+
   const usedAttempts = 4 - attempts;
 
 
@@ -142,7 +167,7 @@ function handleSubmit() {
           <Button
             title="Restart"
             color={Colors.restart}
-            onPress={handleStart}
+            onPress={handleRestart}
           />
         </View>
         {startGame && (

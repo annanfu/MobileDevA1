@@ -6,7 +6,7 @@ import Colors from '../helper';
 import { useState } from 'react';
 
 
-export default function Start( { registerHandler } ) {
+export default function Start( { registerHandler, restartHandler } ) {
   const [isChecked, setChecked] = useState(false);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -59,57 +59,66 @@ export default function Start( { registerHandler } ) {
     setChecked(false);
   }
 
+  if (restartHandler === true) {
+    handleReset();
+  }
 
   return (
     <View style={styles.container}>
-
       <View style={styles.item}>
         <Text style={styles.text}>Name</Text>
         <TextInput
           style={styles.textInput}
-          autoFocus={true}
+          autoFocus={false}
           value={name}
           onChangeText={(inputText) => setName(inputText)}
           keyboardType="default"
         />
-        {(name.length > 0 && !validateName(name)) && (<Text>Please enter a valid name</Text>)}   
+        {name.length > 0 && !validateName(name) && (
+          <Text>Please enter a valid name</Text>
+        )}
       </View>
       <View style={styles.item}>
         <Text style={styles.text}>Email Address</Text>
         <TextInput
           style={styles.textInput}
-          autoFocus={true}
+          autoFocus={false}
           value={email}
           onChangeText={(inputText) => setEmail(inputText)}
           keyboardType="email-address"
         />
-        {(email.length > 0 && !validateEmail(email)) && (<Text>Please enter a valid email</Text>)}  
+        {email.length > 0 && !validateEmail(email) && (
+          <Text>Please enter a valid email</Text>
+        )}
       </View>
       <View style={styles.item}>
         <Text style={styles.text}>Phone Number</Text>
         <TextInput
           style={styles.textInput}
-          autoFocus={true}
+          autoFocus={false}
           value={phone}
           onChangeText={(inputText) => setPhone(inputText)}
           keyboardType="email-address"
         />
-        {(phone.length > 0 && !validatePhone(phone)) && (<Text>Please enter a valid phone number</Text>)}  
+        {phone.length > 0 && !validatePhone(phone) && (
+          <Text>Please enter a valid phone number</Text>
+        )}
       </View>
-      <View style={{flexDirection: 'row', gap: 20}}>
-      <Checkbox
-        value={isChecked}
-        onValueChange={setChecked}
-      />
-      <Text>I am not a robot</Text>
+      <View style={{ flexDirection: "row", gap: 20 }}>
+        <Checkbox value={isChecked} onValueChange={setChecked} />
+        <Text>I am not a robot</Text>
       </View>
-      <View style={styles.buttonArea }>
-        <Button title="Reset" color={Colors.cancel} onPress={handleReset}/>
-        <Button title="Register" color={Colors.ok} onPress={handleRegister} disabled={!isChecked}/>
-
+      <View style={styles.buttonArea}>
+        <Button title="Reset" color={Colors.cancel} onPress={handleReset} />
+        <Button
+          title="Register"
+          color={Colors.ok}
+          onPress={handleRegister}
+          disabled={!isChecked}
+        />
       </View>
     </View>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
