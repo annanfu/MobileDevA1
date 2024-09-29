@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
   },
     text: {
         color: Colors.primary,
-        fontSize: 15,
+        fontSize: 18,
     },
     background: {
     position: 'absolute',

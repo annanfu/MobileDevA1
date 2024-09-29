@@ -101,15 +101,6 @@ function handleSubmit() {
     clearInterval(timerId);
     return;
   }
-
-  if (attempts === 1) {
-    console.log("You are out of attempts");
-    setEndGame("You are out of attempts");
-    setPrompt("");
-    setPlayGame(false);
-    clearInterval(timerId);
-    return;
-  }
   if (time === 0) {
     console.log("You are out of time");
     setEndGame("You are out of time");
@@ -117,19 +108,20 @@ function handleSubmit() {
     setPlayGame(false);
     return;
   }
-
-
   console.log("Submit");
   console.log(`Random Number: ${number}`);
   console.log(`Guess: ${guessNumber}`);
-}
-
-
-  
+}  
   function handleTryagain() {
     setGuess("");
     setPrompt("");
     setPlayGame(true);
+      if (attempts === 0) {
+        console.log("You are out of attempts");
+        setEndGame("You are out of attempts");
+        setPlayGame(false);
+        clearInterval(timerId);
+      }
   }
   function handleEndgame() {
     clearInterval(timerId);
@@ -137,9 +129,6 @@ function handleSubmit() {
     setPrompt("");
     setEndGame("Game Over");
   }
-
-
-
 
 
   return (
@@ -183,7 +172,7 @@ function handleSubmit() {
                 keyboardType="numeric"
                 onChangeText={(text) => setGuess(text)}
                 value={guess}
-                autoFocus={true}
+                autoFocus={false}
               />
               {hint.length > 0 && (
                 <Text style={{ textAlign: "center" }}>{hint}</Text>
@@ -300,6 +289,8 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     alignSelf: "center",
     width: "10%",
+    fontSize: 20,
+    color: Colors.primary,
   },
   background: {
     position: "absolute",
