@@ -3,6 +3,7 @@ import React from 'react'
 import Colors from '../helper';
 import { LinearGradient } from 'expo-linear-gradient';
 import GradientBackground from '../Components/GradientBackground';
+import Card from '../Components/Card';
 
 export default function Confirm({confirmVisibility, userInfo, gobackHandler, continueHandler}) {
     function handleGoback() {
@@ -17,7 +18,7 @@ export default function Confirm({confirmVisibility, userInfo, gobackHandler, con
       
         <GradientBackground>
 
-        <View style={styles.innerContainer}>
+        <Card>
           <Text style={styles.text}>Hello {userInfo[0]}</Text>
           <Text style={styles.text}>Here is the information you entered:</Text>
           <Text style={styles.text}>{userInfo[1]}</Text>
@@ -28,7 +29,7 @@ export default function Confirm({confirmVisibility, userInfo, gobackHandler, con
               <Button title="Go back" color={Colors.cancel} onPress={handleGoback}/>
               <Button title="Continue" color={Colors.ok} onPress={handleContinue}/>
           </View>
-        </View>        
+        </Card>        
 
         </GradientBackground>
       
@@ -37,19 +38,7 @@ export default function Confirm({confirmVisibility, userInfo, gobackHandler, con
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  innerContainer: {
-    backgroundColor: Colors.containerBackground,
-    padding: 20,
-    borderRadius: 10,
-    // alignItems: 'center',
-    justifyContent: 'center',
-    width: '90%',
-  },
+
   buttonArea: {
     flexDirection: 'row',
     justifyContent: 'space-around',
@@ -59,13 +48,4 @@ const styles = StyleSheet.create({
         color: Colors.primary,
         fontSize: 18,
     },
-    background: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    top: 0,
-    bottom: 0,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
 })

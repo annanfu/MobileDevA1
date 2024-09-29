@@ -4,6 +4,7 @@ import Checkbox from 'expo-checkbox';
 //import Button from '../Components/Button';
 import Colors from '../helper';
 import { useState } from 'react';
+import Card from '../Components/Card';
 
 
 export default function Start( { registerHandler, restartHandler } ) {
@@ -64,7 +65,7 @@ export default function Start( { registerHandler, restartHandler } ) {
   }
 
   return (
-    <View style={styles.container}>
+    <Card>
       <View style={styles.item}>
         <Text style={styles.text}>Name</Text>
         <TextInput
@@ -117,19 +118,11 @@ export default function Start( { registerHandler, restartHandler } ) {
           disabled={!isChecked}
         />
       </View>
-    </View>
+    </Card>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    backgroundColor: Colors.containerBackground,
-    width: "80%",
-    padding: 20,
-    borderRadius: 10,
-    // alignItems: 'center',
-    justifyContent: "center",
-  },
   item: {
     marginBottom: 40,
   },

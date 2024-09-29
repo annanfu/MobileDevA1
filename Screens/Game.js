@@ -4,6 +4,7 @@ import Colors from "../helper";
 import { LinearGradient } from "expo-linear-gradient";
 import { useState } from "react";
 import GradientBackground from "../Components/GradientBackground";
+import Card from "../Components/Card";
 
 
 export default function Game({ userInfo, restartHandler }) {
@@ -167,7 +168,7 @@ function handleSubmit() {
           />
         </View>
         {startGame && (
-          <View style={styles.innerContainer}>
+          <Card>
             <View>
               <Text style={styles.text}>
                 Guess a number between 1 & 100 that is mutiply of{" "}
@@ -177,11 +178,11 @@ function handleSubmit() {
             <View style={styles.buttonArea}>
               <Button title="Start" color={Colors.ok} onPress={handleStart} />
             </View>
-          </View>
+          </Card>
         )}
 
         {playGame && (
-          <View style={styles.innerContainer}>
+          <Card>
             <View>
               <Text style={styles.text}>
                 Guess a number between 1 & 100 that is mutiply of{" "}
@@ -219,11 +220,11 @@ function handleSubmit() {
               onPress={handleSubmit}
             />
             </View>
-          </View>
+          </Card>
         )}
 
         {prompt !== "" && prompt !== "correct" && (
-          <View style={styles.innerContainer}>
+          <Card>
             <View style={{ marginBottom: 20 }}>
               <Text style={styles.text}>You did not guess correct!</Text>
               <Text style={styles.text}>You should guess {prompt}.</Text>
@@ -242,11 +243,11 @@ function handleSubmit() {
               onPress={handleEndgame}
             />
             </View>
-          </View>
+          </Card>
         )}
 
         {win && (
-          <View style={styles.innerContainer}>
+          <Card>
             <View style={{ marginBottom: 20 }}>
               <Text style={styles.text}>You guessed correct!</Text>
               <Text style={styles.text}>Attempts used: {usedAttempts}</Text>
@@ -258,11 +259,11 @@ function handleSubmit() {
               />
             </View>
             <Button title="New Game" color={Colors.ok} onPress={handleStart} />
-          </View>
+          </Card>
         )}
 
         {endGame !== "" && (
-          <View style={styles.innerContainer}>
+          <Card>
             <View style={{ marginBottom: 20 }}>
               <Text style={styles.text}>The game is over!</Text>
             </View>
@@ -278,7 +279,7 @@ function handleSubmit() {
               </View>
             )}
             <Button title="New Game" color={Colors.ok} onPress={handleStart} />
-          </View>
+          </Card>
         )}
       </GradientBackground>
 
@@ -286,19 +287,6 @@ function handleSubmit() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    // alignItems: "center",
-    justifyContent: "center",
-  },
-  innerContainer: {
-    backgroundColor: Colors.containerBackground,
-    padding: 20,
-    borderRadius: 10,
-    alignItems: "center",
-    justifyContent: "center",
-    width: "90%",
-  },
   buttonArea: {
     flexDirection: "row",
     justifyContent: "space-around",
@@ -320,15 +308,6 @@ const styles = StyleSheet.create({
     width: 30,
     fontSize: 20,
     color: Colors.primary,
-  },
-  background: {
-    position: "absolute",
-    left: 0,
-    right: 0,
-    top: 0,
-    bottom: 0,
-    justifyContent: "center",
-    alignItems: "center",
   },
   restart: {
     margin: 10,
