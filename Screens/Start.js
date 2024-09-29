@@ -123,12 +123,12 @@ export default function Start( { registerHandler, restartHandler } ) {
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
     backgroundColor: Colors.containerBackground,
-    width: '80%',
-    justifyContent: 'center',
+    width: "80%",
     padding: 20,
     borderRadius: 10,
+    // alignItems: 'center',
+    justifyContent: "center",
   },
   item: {
     marginBottom: 40,
@@ -139,15 +139,15 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   textInput: {
-    textAlign: 'center',
+    textAlign: "center",
     marginTop: 10,
     borderBottomWidth: 2,
     borderBottomColor: Colors.primary,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   buttonArea: {
     padding: 20,
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-  }
-})
+    flexDirection: "row",
+    justifyContent: "space-around",
+  },
+});

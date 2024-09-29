@@ -7,6 +7,7 @@ import Colors from './helper';
 import Confirm from './Screens/Confirm';
 import Game from './Screens/Game';
 import { useState } from 'react';
+import GradientBackground from './Components/GradientBackground';
 
 export default function App() {
   const [confirmVisibility, setConfirmVisibility] = useState(false);
@@ -37,19 +38,15 @@ export default function App() {
     );
   }
   return (
-    <SafeAreaView style={styles.container}>
-      <StatusBar style="auto" />
-      <LinearGradient
-      colors={[Colors.backgroundTop, Colors.backgroundBottom]}
-      style={styles.background}>  
+    <GradientBackground>
+      <SafeAreaView style={styles.container}>
+        <StatusBar style="auto" />
+
         <View style={styles.topView}>
           <Text style={styles.text}>Welcome</Text>
         </View>
         <View style={styles.bottomView}>
-          <Start
-            registerHandler={handleRegister}
-            restartHandler={restart}
-            />
+          <Start registerHandler={handleRegister} restartHandler={restart} />
           <Confirm
             confirmVisibility={confirmVisibility}
             userInfo={user}
@@ -57,37 +54,28 @@ export default function App() {
             continueHandler={handleContinue}
           />
         </View>
-      </LinearGradient>
-    </SafeAreaView>
+      </SafeAreaView>
+    </GradientBackground>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // backgroundColor: 'blue',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  background: {
-    position: 'absolute',
-    left: 0,
-    right: 0,
-    top: 0,
-    bottom: 0,
+    width: "100%",
   },
   topView: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   bottomView: {
     flex: 4,
-    alignItems: 'center',
+    alignItems: "center",
   },
   text: {
     color: Colors.primary,
     fontSize: 30,
-    fontWeight: 'bold',
-  }
+    fontWeight: "bold",
+  },
 });

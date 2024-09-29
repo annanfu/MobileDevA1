@@ -1,26 +1,26 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
+import Colors from '../helper';
 
-export default function Card() {
-  return (
-    <View style={styles.container}>
-
-      <Text>Card</Text>
-    </View>
-  )
+export default function Card({ children, style }) {
+  return <View style={[styles.card, style]}>{children}</View>;
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        // backgroundColor: 'blue',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    innerContainer: {
-    backgroundColor: 'grey',
-    padding: 20,
-    borderRadius: 10,
+  card: {
+    flex: 1,
     alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: Colors.containerBackground,
+    borderRadius: 10,
+    padding: 20,
+    margin: 10,
+    // iOS shadow
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    // Android shadow
+    elevation: 5,
   },
 })

@@ -2,6 +2,7 @@ import { StyleSheet, Text, View, Modal, Button } from 'react-native'
 import React from 'react'
 import Colors from '../helper';
 import { LinearGradient } from 'expo-linear-gradient';
+import GradientBackground from '../Components/GradientBackground';
 
 export default function Confirm({confirmVisibility, userInfo, gobackHandler, continueHandler}) {
     function handleGoback() {
@@ -13,8 +14,8 @@ export default function Confirm({confirmVisibility, userInfo, gobackHandler, con
     
   return (
     <Modal visible={confirmVisibility} animationType="slide" transparent={true}>
-      <View style={styles.container}>
-        <LinearGradient colors={[Colors.backgroundTop, Colors.backgroundBottom]} style={styles.background}>
+      
+        <GradientBackground>
 
         <View style={styles.innerContainer}>
           <Text style={styles.text}>Hello {userInfo[0]}</Text>
@@ -29,8 +30,8 @@ export default function Confirm({confirmVisibility, userInfo, gobackHandler, con
           </View>
         </View>        
 
-        </LinearGradient>
-      </View>
+        </GradientBackground>
+      
     </Modal>
   )
 }

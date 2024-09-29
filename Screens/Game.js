@@ -3,6 +3,8 @@ import React from "react";
 import Colors from "../helper";
 import { LinearGradient } from "expo-linear-gradient";
 import { useState } from "react";
+import GradientBackground from "../Components/GradientBackground";
+
 
 export default function Game({ userInfo, restartHandler }) {
   const [startGame, setStartGame] = useState(true);
@@ -151,18 +153,12 @@ function handleSubmit() {
     restartHandler();
   }
 
-
-
-
   const usedAttempts = 4 - attempts;
 
 
   return (
-    <View style={styles.container}>
-      <LinearGradient
-        colors={[Colors.backgroundTop, Colors.backgroundBottom]}
-        style={styles.background}
-      >
+
+       <GradientBackground>
         <View style={styles.restart}>
           <Button
             title="Restart"
@@ -208,18 +204,21 @@ function handleSubmit() {
               <Text style={styles.reminder}>Attempts left: {attempts}</Text>
               <Text style={styles.reminder}>Timer: {time}s</Text>
             </View>
-
+            <View style={styles.buttonArea}>
             <Button
               title="Use a Hint"
               color={Colors.ok}
               onPress={handleHint}
               disabled={hint.length > 0}
             />
+            </View>
+            <View style={styles.buttonArea}>
             <Button
               title="Submit Guess"
               color={Colors.ok}
               onPress={handleSubmit}
             />
+            </View>
           </View>
         )}
 
@@ -229,16 +228,20 @@ function handleSubmit() {
               <Text style={styles.text}>You did not guess correct!</Text>
               <Text style={styles.text}>You should guess {prompt}.</Text>
             </View>
+            <View style={styles.buttonArea}>
             <Button
               title="Try Again"
               color={Colors.ok}
               onPress={handleTryagain}
             />
+            </View>
+            <View style={styles.buttonArea}>
             <Button
               title="End the Game"
               color={Colors.ok}
               onPress={handleEndgame}
             />
+            </View>
           </View>
         )}
 
@@ -277,29 +280,29 @@ function handleSubmit() {
             <Button title="New Game" color={Colors.ok} onPress={handleStart} />
           </View>
         )}
-      </LinearGradient>
-    </View>
+      </GradientBackground>
+
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    //alignItems: "center",
+    // alignItems: "center",
     justifyContent: "center",
   },
   innerContainer: {
     backgroundColor: Colors.containerBackground,
     padding: 20,
     borderRadius: 10,
-    // alignItems: "center",
+    alignItems: "center",
     justifyContent: "center",
     width: "90%",
   },
   buttonArea: {
     flexDirection: "row",
     justifyContent: "space-around",
-    padding: 10,
+    padding: 5,
   },
   text: {
     color: Colors.primary,
@@ -314,7 +317,7 @@ const styles = StyleSheet.create({
     borderBottomColor: Colors.primary,
     fontWeight: "bold",
     alignSelf: "center",
-    width: "10%",
+    width: 30,
     fontSize: 20,
     color: Colors.primary,
   },
