@@ -1,10 +1,11 @@
 import { StyleSheet, Text, TextInput, View, Button, Alert } from 'react-native'
 import React from 'react'
 import Checkbox from 'expo-checkbox';
-//import Button from '../Components/Button';
 import Colors from '../helper';
 import { useState } from 'react';
 import Card from '../Components/Card';
+import PrimaryText from '../Components/PrimaryText';
+import ButtonArea from '../Components/ButtonArea';
 
 
 export default function Start( { registerHandler, restartHandler } ) {
@@ -67,7 +68,7 @@ export default function Start( { registerHandler, restartHandler } ) {
   return (
     <Card>
       <View style={styles.item}>
-        <Text style={styles.text}>Name</Text>
+        <PrimaryText>Name</PrimaryText>
         <TextInput
           style={styles.textInput}
           autoFocus={false}
@@ -80,7 +81,7 @@ export default function Start( { registerHandler, restartHandler } ) {
         )}
       </View>
       <View style={styles.item}>
-        <Text style={styles.text}>Email Address</Text>
+        <PrimaryText>Email Address</PrimaryText>
         <TextInput
           style={styles.textInput}
           autoFocus={false}
@@ -93,7 +94,7 @@ export default function Start( { registerHandler, restartHandler } ) {
         )}
       </View>
       <View style={styles.item}>
-        <Text style={styles.text}>Phone Number</Text>
+        <PrimaryText>Phone Number</PrimaryText>
         <TextInput
           style={styles.textInput}
           autoFocus={false}
@@ -109,7 +110,7 @@ export default function Start( { registerHandler, restartHandler } ) {
         <Checkbox value={isChecked} onValueChange={setChecked} />
         <Text>I am not a robot</Text>
       </View>
-      <View style={styles.buttonArea}>
+      <ButtonArea>
         <Button title="Reset" color={Colors.cancel} onPress={handleReset} />
         <Button
           title="Register"
@@ -117,7 +118,7 @@ export default function Start( { registerHandler, restartHandler } ) {
           onPress={handleRegister}
           disabled={!isChecked}
         />
-      </View>
+      </ButtonArea>
     </Card>
   );
 }
@@ -125,11 +126,6 @@ export default function Start( { registerHandler, restartHandler } ) {
 const styles = StyleSheet.create({
   item: {
     marginBottom: 40,
-  },
-  text: {
-    color: Colors.primary,
-    fontSize: 15,
-    marginBottom: 10,
   },
   textInput: {
     textAlign: "center",

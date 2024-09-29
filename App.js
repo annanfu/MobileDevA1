@@ -1,7 +1,6 @@
 
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
-import { LinearGradient } from 'expo-linear-gradient';
 import Start from './Screens/Start';
 import Colors from './helper';
 import Confirm from './Screens/Confirm';

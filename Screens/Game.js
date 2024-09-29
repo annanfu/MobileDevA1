@@ -1,10 +1,11 @@
 import { Button, StyleSheet, Text, TextInput, View, Alert, Image } from "react-native";
 import React from "react";
 import Colors from "../helper";
-import { LinearGradient } from "expo-linear-gradient";
 import { useState } from "react";
 import GradientBackground from "../Components/GradientBackground";
 import Card from "../Components/Card";
+import ButtonArea from "../Components/ButtonArea";
+import PrimaryText from "../Components/PrimaryText";
 
 
 export default function Game({ userInfo, restartHandler }) {
@@ -158,143 +159,142 @@ function handleSubmit() {
 
 
   return (
+    <GradientBackground>
+      <View style={styles.restart}>
+        <Button
+          title="Restart"
+          color={Colors.restart}
+          onPress={handleRestart}
+        />
+      </View>
+      {startGame && (
+        <Card>
+          <View>
+            <PrimaryText style={styles.text}>
+              Guess a number between 1 & 100 that is mutiply of {userInfo[2][9]}
+              .
+            </PrimaryText>
+            <PrimaryText style={styles.text}>
+              You have 60 seconds and 4 attempts to guess.
+            </PrimaryText>
+          </View>
+          <ButtonArea>
+            <Button title="Start" color={Colors.ok} onPress={handleStart} />
+          </ButtonArea>
+        </Card>
+      )}
 
-       <GradientBackground>
-        <View style={styles.restart}>
-          <Button
-            title="Restart"
-            color={Colors.restart}
-            onPress={handleRestart}
-          />
-        </View>
-        {startGame && (
-          <Card>
-            <View>
-              <Text style={styles.text}>
-                Guess a number between 1 & 100 that is mutiply of{" "}
-                {userInfo[2][9]}
-              </Text>
-            </View>
-            <View style={styles.buttonArea}>
-              <Button title="Start" color={Colors.ok} onPress={handleStart} />
-            </View>
-          </Card>
-        )}
-
-        {playGame && (
-          <Card>
-            <View>
-              <Text style={styles.text}>
-                Guess a number between 1 & 100 that is mutiply of{" "}
-                {userInfo[2][9]}
-              </Text>
-            </View>
-            <View style={{ marginBottom: 10 }}>
-              <TextInput
-                style={styles.textInput}
-                keyboardType="numeric"
-                onChangeText={(text) => setGuess(text)}
-                value={guess}
-                autoFocus={false}
-              />
-              {hint.length > 0 && (
-                <Text style={{ textAlign: "center" }}>{hint}</Text>
-              )}
-            </View>
-            <View style={{ margin: 20 }}>
-              <Text style={styles.reminder}>Attempts left: {attempts}</Text>
-              <Text style={styles.reminder}>Timer: {time}s</Text>
-            </View>
-            <View style={styles.buttonArea}>
+      {playGame && (
+        <Card>
+          <View>
+            <PrimaryText style={styles.text}>
+              Guess a number between 1 & 100 that is mutiply of {userInfo[2][9]}
+            </PrimaryText>
+          </View>
+          <View style={{ marginBottom: 10 }}>
+            <TextInput
+              style={styles.textInput}
+              keyboardType="numeric"
+              onChangeText={(text) => setGuess(text)}
+              value={guess}
+              autoFocus={false}
+            />
+            {hint.length > 0 && (
+              <Text style={{ textAlign: "center" }}>{hint}</Text>
+            )}
+          </View>
+          <View style={{ margin: 20 }}>
+            <Text style={styles.reminder}>Attempts left: {attempts}</Text>
+            <Text style={styles.reminder}>Timer: {time}s</Text>
+          </View>
+          <ButtonArea>
             <Button
               title="Use a Hint"
               color={Colors.ok}
               onPress={handleHint}
               disabled={hint.length > 0}
             />
-            </View>
-            <View style={styles.buttonArea}>
+          </ButtonArea>
+          <ButtonArea>
             <Button
               title="Submit Guess"
               color={Colors.ok}
               onPress={handleSubmit}
             />
-            </View>
-          </Card>
-        )}
+          </ButtonArea>
+        </Card>
+      )}
 
-        {prompt !== "" && prompt !== "correct" && (
-          <Card>
-            <View style={{ marginBottom: 20 }}>
-              <Text style={styles.text}>You did not guess correct!</Text>
-              <Text style={styles.text}>You should guess {prompt}.</Text>
-            </View>
-            <View style={styles.buttonArea}>
+      {prompt !== "" && prompt !== "correct" && (
+        <Card>
+          <View style={{ marginBottom: 20 }}>
+            <PrimaryText style={styles.text}>
+              You did not guess correct!
+            </PrimaryText>
+            <PrimaryText style={styles.text}>
+              You should guess {prompt}.
+            </PrimaryText>
+          </View>
+          <ButtonArea>
             <Button
               title="Try Again"
               color={Colors.ok}
               onPress={handleTryagain}
             />
-            </View>
-            <View style={styles.buttonArea}>
+          </ButtonArea>
+          <ButtonArea>
             <Button
               title="End the Game"
               color={Colors.ok}
               onPress={handleEndgame}
             />
-            </View>
-          </Card>
-        )}
+          </ButtonArea>
+        </Card>
+      )}
 
-        {win && (
-          <Card>
-            <View style={{ marginBottom: 20 }}>
-              <Text style={styles.text}>You guessed correct!</Text>
-              <Text style={styles.text}>Attempts used: {usedAttempts}</Text>
-            </View>
-            <View>
-              <Image
-                source={{uri: `https://picsum.photos/id/${number}/100/100`}}
-                style={styles.image}
-              />
-            </View>
-            <Button title="New Game" color={Colors.ok} onPress={handleStart} />
-          </Card>
-        )}
+      {win && (
+        <Card>
+          <View style={{ marginBottom: 20 }}>
+            <PrimaryText style={styles.text}>You guessed correct!</PrimaryText>
+            <PrimaryText style={styles.text}>
+              Attempts used: {usedAttempts}
+            </PrimaryText>
+          </View>
+          <View>
+            <Image
+              source={{ uri: `https://picsum.photos/id/${number}/100/100` }}
+              style={styles.image}
+            />
+          </View>
+          <Button title="New Game" color={Colors.ok} onPress={handleStart} />
+        </Card>
+      )}
 
-        {endGame !== "" && (
-          <Card>
-            <View style={{ marginBottom: 20 }}>
-              <Text style={styles.text}>The game is over!</Text>
+      {endGame !== "" && (
+        <Card>
+          <View style={{ marginBottom: 20 }}>
+            <PrimaryText style={styles.text}>The game is over!</PrimaryText>
+          </View>
+          <View>
+            <Image
+              source={require("../assets/unamusedFaceEmoji.png")}
+              style={styles.image}
+            />
+          </View>
+          {endGame !== "Game Over" && (
+            <View style={{ margin: 10 }}>
+              <PrimaryText style={styles.text}>{endGame}</PrimaryText>
             </View>
-            <View>
-              <Image
-                source={require("../assets/unamusedFaceEmoji.png")}
-                style={styles.image}
-              />
-            </View>
-            {endGame !== "Game Over" && (
-              <View style={{ margin: 10 }}>
-                <Text style={styles.text}>{endGame}</Text>
-              </View>
-            )}
-            <Button title="New Game" color={Colors.ok} onPress={handleStart} />
-          </Card>
-        )}
-      </GradientBackground>
-
+          )}
+          <Button title="New Game" color={Colors.ok} onPress={handleStart} />
+        </Card>
+      )}
+    </GradientBackground>
   );
 }
 
 const styles = StyleSheet.create({
-  buttonArea: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    padding: 5,
-  },
   text: {
-    color: Colors.primary,
-    fontSize: 20,
     textAlign: "center",
   },
   textInput: {
