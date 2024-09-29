@@ -12,6 +12,7 @@ export default function Game({ userInfo }) {
   const [attempts, setAttempts] = useState(20);
   const [time, setTime] = useState(60);
   const [prompt, setPrompt] = useState("");
+  const [hint, setHint] = useState("");
 
   const randomNumber = () => {
     let multiplies = [];
@@ -34,7 +35,11 @@ export default function Game({ userInfo }) {
     setGuess("");
   }
   function handleHint() {
-    console.log("Hint");
+    if (number < 50) {
+      setHint("The number is between 1 and 50");
+    } else {
+      setHint("The number is between 50 and 100");
+    }
   }
   function validateInput(input) {
     if (isNaN(input)) {
@@ -100,7 +105,11 @@ function handleSubmit() {
         style={styles.background}
       >
         <View style={styles.restart}>
-          <Button title="Restart" color={Colors.restart} onPress={handleStart} />
+          <Button
+            title="Restart"
+            color={Colors.restart}
+            onPress={handleStart}
+          />
         </View>
         {startGame && (
           <View style={styles.innerContainer}>
@@ -124,7 +133,7 @@ function handleSubmit() {
                 {userInfo[2][9]}
               </Text>
             </View>
-            <View>
+            <View style={{ marginBottom: 10 }}>
               <TextInput
                 style={styles.textInput}
                 keyboardType="numeric"
@@ -132,15 +141,21 @@ function handleSubmit() {
                 value={guess}
                 autoFocus={true}
               />
+              {hint.length > 0 && (
+                <Text style={{ textAlign: "center" }}>{hint}</Text>
+              )}
             </View>
             <View style={{ margin: 20 }}>
-              <Text style={{ textAlign: "center" }}>
-                Attempts left: {attempts}
-              </Text>
-              <Text style={{ textAlign: "center" }}>Timer: {time}s</Text>
+              <Text style={styles.reminder}>Attempts left: {attempts}</Text>
+              <Text style={styles.reminder}>Timer: {time}s</Text>
             </View>
 
-            <Button title="Use a Hint" color={Colors.ok} onPress={handleHint} />
+            <Button
+              title="Use a Hint"
+              color={Colors.ok}
+              onPress={handleHint}
+              disabled={hint.length > 0}
+            />
             <Button
               title="Submit Guess"
               color={Colors.ok}
@@ -151,7 +166,7 @@ function handleSubmit() {
 
         {prompt !== "" && prompt !== "correct" && (
           <View style={styles.innerContainer}>
-            <View>
+            <View style={{ marginBottom: 20 }}>
               <Text style={styles.text}>You did not guess correct!</Text>
               <Text style={styles.text}>You should guess {prompt}.</Text>
             </View>
@@ -193,13 +208,13 @@ const styles = StyleSheet.create({
   },
   text: {
     color: Colors.primary,
-    fontSize: 15,
+    fontSize: 20,
     textAlign: "center",
   },
   textInput: {
     textAlign: "center",
     marginTop: 20,
-    marginBottom: 20,
+    marginBottom: 10,
     borderBottomWidth: 2,
     borderBottomColor: Colors.primary,
     fontWeight: "bold",
@@ -218,5 +233,10 @@ const styles = StyleSheet.create({
   restart: {
     margin: 10,
     alignSelf: "flex-end",
+  },
+  reminder: {
+    color: Colors.secondary,
+    fontSize: 15,
+    textAlign: "center",
   },
 });
