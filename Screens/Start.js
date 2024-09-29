@@ -7,6 +7,7 @@ import Card from '../Components/Card';
 import PrimaryText from '../Components/PrimaryText';
 import ButtonArea from '../Components/ButtonArea';
 import Input from '../Components/Input';
+import CustomButton from '../Components/CustomButton';
 
 
 export default function Start( { registerHandler, restartHandler } ) {
@@ -84,7 +85,6 @@ export default function Start( { registerHandler, restartHandler } ) {
         <Input
           value={email}
           onChangeText={(inputText) => setEmail(inputText)}
-          keyboardType="email-address"
         />
         {email.length > 0 && !validateEmail(email) && (
           <Text>Please enter a valid email</Text>
@@ -95,7 +95,6 @@ export default function Start( { registerHandler, restartHandler } ) {
         <Input
           value={phone}
           onChangeText={(inputText) => setPhone(inputText)}
-          keyboardType="numeric"
         />
         {phone.length > 0 && !validatePhone(phone) && (
           <Text>Please enter a valid phone number</Text>
@@ -106,10 +105,9 @@ export default function Start( { registerHandler, restartHandler } ) {
         <Text>I am not a robot</Text>
       </View>
       <ButtonArea>
-        <Button title="Reset" color={Colors.cancel} onPress={handleReset} />
-        <Button
+        <CustomButton title="Reset" color={Colors.cancel} onPress={handleReset} />
+        <CustomButton
           title="Register"
-          color={Colors.ok}
           onPress={handleRegister}
           disabled={!isChecked}
         />
@@ -122,17 +120,5 @@ export default function Start( { registerHandler, restartHandler } ) {
 const styles = StyleSheet.create({
   item: {
     marginBottom: 40,
-  },
-  textInput: {
-    textAlign: "center",
-    marginTop: 10,
-    borderBottomWidth: 2,
-    borderBottomColor: Colors.primary,
-    fontWeight: "bold",
-  },
-  buttonArea: {
-    padding: 20,
-    flexDirection: "row",
-    justifyContent: "space-around",
   },
 });

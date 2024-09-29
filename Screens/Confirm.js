@@ -5,6 +5,8 @@ import GradientBackground from '../Components/GradientBackground';
 import Card from '../Components/Card';
 import ButtonArea from '../Components/ButtonArea';
 import PrimaryText from '../Components/PrimaryText';
+import CustomButton from '../Components/CustomButton';
+
 
 export default function Confirm({confirmVisibility, userInfo, gobackHandler, continueHandler}) {
     function handleGoback() {
@@ -27,14 +29,13 @@ export default function Confirm({confirmVisibility, userInfo, gobackHandler, con
           </PrimaryText>
 
           <ButtonArea>
-            <Button
+            <CustomButton
               title="Go back"
               color={Colors.cancel}
               onPress={handleGoback}
             />
-            <Button
+            <CustomButton
               title="Continue"
-              color={Colors.ok}
               onPress={handleContinue}
             />
           </ButtonArea>

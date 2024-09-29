@@ -7,6 +7,7 @@ import Card from "../Components/Card";
 import ButtonArea from "../Components/ButtonArea";
 import PrimaryText from "../Components/PrimaryText";
 import Input from "../Components/Input";
+import CustomButton from "../Components/CustomButton";
 
 
 export default function Game({ userInfo, restartHandler }) {
@@ -162,7 +163,7 @@ function handleSubmit() {
   return (
     <GradientBackground>
       <View style={styles.restart}>
-        <Button
+        <CustomButton
           title="Restart"
           color={Colors.restart}
           onPress={handleRestart}
@@ -180,7 +181,7 @@ function handleSubmit() {
             </PrimaryText>
           </View>
           <ButtonArea>
-            <Button title="Start" color={Colors.ok} onPress={handleStart} />
+            <CustomButton title="Start" onPress={handleStart} />
           </ButtonArea>
         </Card>
       )}
@@ -195,7 +196,6 @@ function handleSubmit() {
           <View style={{ marginBottom: 10 }}>
             <Input
               style={styles.textInput}
-              keyboardType="numeric"
               onChangeText={(text) => setGuess(text)}
               value={guess}
             />
@@ -208,17 +208,15 @@ function handleSubmit() {
             <Text style={styles.reminder}>Timer: {time}s</Text>
           </View>
           <ButtonArea>
-            <Button
+            <CustomButton
               title="Use a Hint"
-              color={Colors.ok}
               onPress={handleHint}
               disabled={hint.length > 0}
             />
           </ButtonArea>
           <ButtonArea>
-            <Button
+            <CustomButton
               title="Submit Guess"
-              color={Colors.ok}
               onPress={handleSubmit}
             />
           </ButtonArea>
@@ -236,16 +234,14 @@ function handleSubmit() {
             </PrimaryText>
           </View>
           <ButtonArea>
-            <Button
+            <CustomButton
               title="Try Again"
-              color={Colors.ok}
               onPress={handleTryagain}
             />
           </ButtonArea>
           <ButtonArea>
-            <Button
+            <CustomButton
               title="End the Game"
-              color={Colors.ok}
               onPress={handleEndgame}
             />
           </ButtonArea>
@@ -266,7 +262,7 @@ function handleSubmit() {
               style={styles.image}
             />
           </View>
-          <Button title="New Game" color={Colors.ok} onPress={handleStart} />
+          <CustomButton title="New Game" onPress={handleStart} />
         </Card>
       )}
 
@@ -286,7 +282,7 @@ function handleSubmit() {
               <PrimaryText style={styles.text}>{endGame}</PrimaryText>
             </View>
           )}
-          <Button title="New Game" color={Colors.ok} onPress={handleStart} />
+          <CustomButton title="New Game" onPress={handleStart} />
         </Card>
       )}
     </GradientBackground>
