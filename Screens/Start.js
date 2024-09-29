@@ -56,6 +56,7 @@ export default function Start( { registerHandler } ) {
     setName('');
     setEmail('');
     setPhone('');
+    setChecked(false);
   }
 
 

@@ -1,4 +1,4 @@
-import { Button, StyleSheet, Text, TextInput, View, Alert } from "react-native";
+import { Button, StyleSheet, Text, TextInput, View, Alert, Image } from "react-native";
 import React from "react";
 import Colors from "../helper";
 import { LinearGradient } from "expo-linear-gradient";
@@ -9,12 +9,13 @@ export default function Game({ userInfo }) {
   const [number, setNumber] = useState(0);
   const [playGame, setPlayGame] = useState(false);
   const [guess, setGuess] = useState("");
-  const [attempts, setAttempts] = useState(20);
+  const [attempts, setAttempts] = useState(4);
   const [time, setTime] = useState(60);
   const [prompt, setPrompt] = useState("");
   const [hint, setHint] = useState("");
-  const [endGame, setEndGame] = useState(false);
+  const [endGame, setEndGame] = useState("");
   const [timerId, setTimerId] = useState(null);
+  const [win, setWin] = useState(false);
 
   const randomNumber = () => {
     let multiplies = [];
@@ -33,16 +34,22 @@ export default function Game({ userInfo }) {
     setNumber(randomNumber());
     setStartGame(false);
     setPlayGame(true);
-    setAttempts(20);
+    setAttempts(4);
     setTime(60);
     setGuess("");
+    setPrompt("");
+    setHint("");
+    setEndGame("");
+    setWin(false);
 
     // Set up the timer
     const newTimerId = setInterval(() => {
       setTime((prevTime) => {
         if (prevTime <= 1) {
           clearInterval(newTimerId);
-          handleEndgame();
+          setEndGame("You are out of time");
+          setPrompt("");
+          setPlayGame(false);
           return 0;
         }
         return prevTime - 1;
@@ -60,6 +67,9 @@ export default function Game({ userInfo }) {
     }
   }
   function validateInput(input) {
+    if (input.length === 0) {
+      return false;
+    }
     if (isNaN(input)) {
       return false;
     }
@@ -69,18 +79,13 @@ export default function Game({ userInfo }) {
     return true;
   }
 function handleSubmit() {
+  setAttempts((prevAttempts) => prevAttempts - 1);
   if (!validateInput(guess)) {
     Alert.alert("Invalid Input", "Please enter a number between 1 and 100", [
       { text: "OK" },
     ]);
     return;
   }
-
-  if (attempts === 0 || time === 0) {
-    console.log("Game Over");
-    return;
-  }
-
   const guessNumber = parseInt(guess);
   if (guessNumber < number) {
     setPrompt("higher");
@@ -92,9 +97,28 @@ function handleSubmit() {
     setPrompt("correct");
     setPlayGame(false);
     console.log("Correct Guess!");
+    setWin(true);
+    clearInterval(timerId);
+    return;
   }
 
-  setAttempts((previousAttempts) => previousAttempts - 1);
+  if (attempts === 1) {
+    console.log("You are out of attempts");
+    setEndGame("You are out of attempts");
+    setPrompt("");
+    setPlayGame(false);
+    clearInterval(timerId);
+    return;
+  }
+  if (time === 0) {
+    console.log("You are out of time");
+    setEndGame("You are out of time");
+    setPrompt("");
+    setPlayGame(false);
+    return;
+  }
+
+
   console.log("Submit");
   console.log(`Random Number: ${number}`);
   console.log(`Guess: ${guessNumber}`);
@@ -110,8 +134,8 @@ function handleSubmit() {
   function handleEndgame() {
     clearInterval(timerId);
     setPlayGame(false);
-    setEndGame(true);
-
+    setPrompt("");
+    setEndGame("Game Over");
   }
 
 
@@ -202,6 +226,42 @@ function handleSubmit() {
             />
           </View>
         )}
+
+        {win && (
+          <View style={styles.innerContainer}>
+            <View style={{ marginBottom: 20 }}>
+              <Text style={styles.text}>You guessed correct!</Text>
+              <Text style={styles.text}>Attempts used: {4 - attempts}</Text>
+            </View>
+            <View>
+              <Image
+                source={{uri: `https://picsum.photos/id/${number}/100/100`}}
+                style={styles.image}
+              />
+            </View>
+            <Button title="New Game" color={Colors.ok} onPress={handleStart} />
+          </View>
+        )}
+
+        {endGame !== "" && (
+          <View style={styles.innerContainer}>
+            <View style={{ marginBottom: 20 }}>
+              <Text style={styles.text}>The game is over!</Text>
+            </View>
+            <View>
+              <Image
+                source={require("../assets/unamusedFaceEmoji.png")}
+                style={styles.image}
+              />
+            </View>
+            {endGame !== "Game Over" && (
+              <View style={{ margin: 10 }}>
+                <Text style={styles.text}>{endGame}</Text>
+              </View>
+            )}
+            <Button title="New Game" color={Colors.ok} onPress={handleStart} />
+          </View>
+        )}
       </LinearGradient>
     </View>
   );
@@ -258,5 +318,11 @@ const styles = StyleSheet.create({
     color: Colors.secondary,
     fontSize: 15,
     textAlign: "center",
+  },
+  image: {
+    marginBottom: 20,
+    width: 100,
+    height: 100,
+    alignSelf: "center",
   },
 });
