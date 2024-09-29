@@ -73,7 +73,7 @@ export default function Game({ userInfo }) {
     if (isNaN(input)) {
       return false;
     }
-    if (parseInt(input) < 1 || parseInt(input) > 100) {
+    if (parseInt(input) < 1 || parseInt(input) > 100 || parseInt(input) % userInfo[2][9] !== 0) {
       return false;
     }
     return true;
@@ -81,8 +81,8 @@ export default function Game({ userInfo }) {
 function handleSubmit() {
   setAttempts((prevAttempts) => prevAttempts - 1);
   if (!validateInput(guess)) {
-    Alert.alert("Invalid Input", "Please enter a number between 1 and 100", [
-      { text: "OK" },
+    Alert.alert("Invalid number!", `Number has to be a multiply of ${userInfo[2][9]} between 1 and 100.`, [
+      { text: "Okay" },
     ]);
     return;
   }
@@ -129,6 +129,7 @@ function handleSubmit() {
     setPrompt("");
     setEndGame("Game Over");
   }
+  const usedAttempts = 4 - attempts;
 
 
   return (
@@ -220,7 +221,7 @@ function handleSubmit() {
           <View style={styles.innerContainer}>
             <View style={{ marginBottom: 20 }}>
               <Text style={styles.text}>You guessed correct!</Text>
-              <Text style={styles.text}>Attempts used: {4 - attempts}</Text>
+              <Text style={styles.text}>Attempts used: {usedAttempts}</Text>
             </View>
             <View>
               <Image
