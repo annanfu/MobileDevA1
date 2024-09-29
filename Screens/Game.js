@@ -1,4 +1,4 @@
-import { Button, StyleSheet, Text, TextInput, View } from "react-native";
+import { Button, StyleSheet, Text, TextInput, View, Alert } from "react-native";
 import React from "react";
 import Colors from "../helper";
 import { LinearGradient } from "expo-linear-gradient";
@@ -9,31 +9,89 @@ export default function Game({ userInfo }) {
   const [number, setNumber] = useState(0);
   const [playGame, setPlayGame] = useState(false);
   const [guess, setGuess] = useState("");
-  const [attempts, setAttempts] = useState(4);
+  const [attempts, setAttempts] = useState(20);
   const [time, setTime] = useState(60);
-
-  function handleStart() {
-    setNumber(randomNumber());
-    setStartGame(false);
-    setPlayGame(true);
-  }
-  function handleHint() {
-    console.log("Hint");
-  }
-  function handleSubmit() {
-    console.log("Submit");
-  }
+  const [prompt, setPrompt] = useState("");
 
   const randomNumber = () => {
     let multiplies = [];
     const lastDigit = parseInt(userInfo[2][9]);
-    for (let i = 1; i <= 100; i += lastDigit) {
+    for (let i = lastDigit; i <= 100; i += lastDigit) {
       if (i % lastDigit === 0) {
         multiplies.push(i);
       }
     }
     return multiplies[Math.floor(Math.random() * multiplies.length)];
   };
+
+  function handleStart() {
+    console.log("handleStart triggered");
+    setNumber(randomNumber());
+    setStartGame(false);
+    setPlayGame(true);
+    setAttempts(20);
+    setTime(60);
+    setGuess("");
+  }
+  function handleHint() {
+    console.log("Hint");
+  }
+  function validateInput(input) {
+    if (isNaN(input)) {
+      return false;
+    }
+    if (parseInt(input) < 1 || parseInt(input) > 100) {
+      return false;
+    }
+    return true;
+  }
+function handleSubmit() {
+  if (!validateInput(guess)) {
+    Alert.alert("Invalid Input", "Please enter a number between 1 and 100", [
+      { text: "OK" },
+    ]);
+    return;
+  }
+
+  if (attempts === 0 || time === 0) {
+    console.log("Game Over");
+    return;
+  }
+
+  const guessNumber = parseInt(guess);
+  if (guessNumber < number) {
+    setPrompt("higher");
+    setPlayGame(false);
+  } else if (guessNumber > number) {
+    setPrompt("lower");
+    setPlayGame(false);
+  } else {
+    setPrompt("correct");
+    setPlayGame(false);
+    console.log("Correct Guess!");
+  }
+
+  setAttempts((previousAttempts) => previousAttempts - 1);
+  console.log("Submit");
+  console.log(`Random Number: ${number}`);
+  console.log(`Guess: ${guessNumber}`);
+}
+
+
+  
+  function handleTryagain() {
+    setGuess("");
+    setPrompt("");
+    setPlayGame(true);
+  }
+  function handleEndgame() {
+    setStartGame(true);
+    setPlayGame(false);
+  }
+
+
+
+
 
   return (
     <View style={styles.container}>
@@ -42,7 +100,7 @@ export default function Game({ userInfo }) {
         style={styles.background}
       >
         <View style={styles.restart}>
-          <Button title="Restart" color={Colors.restart} onPress={() => {}} />
+          <Button title="Restart" color={Colors.restart} onPress={handleStart} />
         </View>
         {startGame && (
           <View style={styles.innerContainer}>
@@ -75,24 +133,38 @@ export default function Game({ userInfo }) {
                 autoFocus={true}
               />
             </View>
-            <View style={{margin: 20}}>
+            <View style={{ margin: 20 }}>
               <Text style={{ textAlign: "center" }}>
                 Attempts left: {attempts}
               </Text>
               <Text style={{ textAlign: "center" }}>Timer: {time}s</Text>
             </View>
 
-              <Button
-                title="Use a Hint"
-                color={Colors.ok}
-                onPress={handleHint}
-              />
-              <Button
-                title="Submit Guess"
-                color={Colors.ok}
-                onPress={handleSubmit}
-              />
+            <Button title="Use a Hint" color={Colors.ok} onPress={handleHint} />
+            <Button
+              title="Submit Guess"
+              color={Colors.ok}
+              onPress={handleSubmit}
+            />
+          </View>
+        )}
 
+        {prompt !== "" && prompt !== "correct" && (
+          <View style={styles.innerContainer}>
+            <View>
+              <Text style={styles.text}>You did not guess correct!</Text>
+              <Text style={styles.text}>You should guess {prompt}.</Text>
+            </View>
+            <Button
+              title="Try Again"
+              color={Colors.ok}
+              onPress={handleTryagain}
+            />
+            <Button
+              title="End the Game"
+              color={Colors.ok}
+              onPress={handleEndgame}
+            />
           </View>
         )}
       </LinearGradient>
@@ -116,7 +188,7 @@ const styles = StyleSheet.create({
   },
   buttonArea: {
     flexDirection: "row",
-    // justifyContent: "space-around",
+    justifyContent: "space-around",
     padding: 10,
   },
   text: {
