@@ -45,8 +45,4 @@ export default function Confirm({confirmVisibility, userInfo, gobackHandler, con
 }
 
 const styles = StyleSheet.create({
-    text: {
-        color: Colors.primary,
-        fontSize: 18,
-    },
 })

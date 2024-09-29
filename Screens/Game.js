@@ -6,6 +6,7 @@ import GradientBackground from "../Components/GradientBackground";
 import Card from "../Components/Card";
 import ButtonArea from "../Components/ButtonArea";
 import PrimaryText from "../Components/PrimaryText";
+import Input from "../Components/Input";
 
 
 export default function Game({ userInfo, restartHandler }) {
@@ -192,12 +193,11 @@ function handleSubmit() {
             </PrimaryText>
           </View>
           <View style={{ marginBottom: 10 }}>
-            <TextInput
+            <Input
               style={styles.textInput}
               keyboardType="numeric"
               onChangeText={(text) => setGuess(text)}
               value={guess}
-              autoFocus={false}
             />
             {hint.length > 0 && (
               <Text style={{ textAlign: "center" }}>{hint}</Text>
@@ -298,16 +298,10 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   textInput: {
-    textAlign: "center",
     marginTop: 20,
     marginBottom: 10,
-    borderBottomWidth: 2,
-    borderBottomColor: Colors.primary,
-    fontWeight: "bold",
     alignSelf: "center",
     width: 30,
-    fontSize: 20,
-    color: Colors.primary,
   },
   restart: {
     margin: 10,

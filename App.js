@@ -1,6 +1,6 @@
 
 import { StatusBar } from 'expo-status-bar';
-import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, View, ScrollView } from 'react-native';
 import Start from './Screens/Start';
 import Colors from './helper';
 import Confirm from './Screens/Confirm';
@@ -37,28 +37,34 @@ export default function App() {
     );
   }
   return (
-    <GradientBackground>
-      <SafeAreaView style={styles.container}>
-        <StatusBar style="auto" />
+    <ScrollView contentContainerStyle={styles.scrollViewContent}>
+      <GradientBackground>
+        <SafeAreaView style={styles.container}>
+          <StatusBar style="auto" />
 
-        <View style={styles.topView}>
-          <Text style={styles.text}>Welcome</Text>
-        </View>
-        <View style={styles.bottomView}>
-          <Start registerHandler={handleRegister} restartHandler={restart} />
-          <Confirm
-            confirmVisibility={confirmVisibility}
-            userInfo={user}
-            gobackHandler={handleGoback}
-            continueHandler={handleContinue}
-          />
-        </View>
-      </SafeAreaView>
-    </GradientBackground>
+          <View style={styles.topView}>
+            <Text style={styles.text}>Welcome</Text>
+          </View>
+          <View style={styles.bottomView}>
+            <Start registerHandler={handleRegister} restartHandler={restart} />
+            <Confirm
+              confirmVisibility={confirmVisibility}
+              userInfo={user}
+              gobackHandler={handleGoback}
+              continueHandler={handleContinue}
+            />
+          </View>
+        </SafeAreaView>
+      </GradientBackground>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
+  scrollViewContent: {
+    flexGrow: 1,
+    justifyContent: "center",
+  },
   container: {
     flex: 1,
     width: "100%",
@@ -69,7 +75,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   bottomView: {
-    flex: 4,
+    flex: 1,
     alignItems: "center",
   },
   text: {

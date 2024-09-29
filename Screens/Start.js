@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TextInput, View, Button, Alert } from 'react-native'
+import { StyleSheet, Text, TextInput, View, Button, Alert} from 'react-native'
 import React from 'react'
 import Checkbox from 'expo-checkbox';
 import Colors from '../helper';
@@ -6,6 +6,7 @@ import { useState } from 'react';
 import Card from '../Components/Card';
 import PrimaryText from '../Components/PrimaryText';
 import ButtonArea from '../Components/ButtonArea';
+import Input from '../Components/Input';
 
 
 export default function Start( { registerHandler, restartHandler } ) {
@@ -66,15 +67,13 @@ export default function Start( { registerHandler, restartHandler } ) {
   }
 
   return (
+
     <Card>
       <View style={styles.item}>
         <PrimaryText>Name</PrimaryText>
-        <TextInput
-          style={styles.textInput}
-          autoFocus={false}
+        <Input
           value={name}
           onChangeText={(inputText) => setName(inputText)}
-          keyboardType="default"
         />
         {name.length > 0 && !validateName(name) && (
           <Text>Please enter a valid name</Text>
@@ -82,9 +81,7 @@ export default function Start( { registerHandler, restartHandler } ) {
       </View>
       <View style={styles.item}>
         <PrimaryText>Email Address</PrimaryText>
-        <TextInput
-          style={styles.textInput}
-          autoFocus={false}
+        <Input
           value={email}
           onChangeText={(inputText) => setEmail(inputText)}
           keyboardType="email-address"
@@ -95,12 +92,10 @@ export default function Start( { registerHandler, restartHandler } ) {
       </View>
       <View style={styles.item}>
         <PrimaryText>Phone Number</PrimaryText>
-        <TextInput
-          style={styles.textInput}
-          autoFocus={false}
+        <Input
           value={phone}
           onChangeText={(inputText) => setPhone(inputText)}
-          keyboardType="email-address"
+          keyboardType="numeric"
         />
         {phone.length > 0 && !validatePhone(phone) && (
           <Text>Please enter a valid phone number</Text>
@@ -120,6 +115,7 @@ export default function Start( { registerHandler, restartHandler } ) {
         />
       </ButtonArea>
     </Card>
+
   );
 }
 
