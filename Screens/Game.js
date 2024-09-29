@@ -13,6 +13,8 @@ export default function Game({ userInfo }) {
   const [time, setTime] = useState(60);
   const [prompt, setPrompt] = useState("");
   const [hint, setHint] = useState("");
+  const [endGame, setEndGame] = useState(false);
+  const [timerId, setTimerId] = useState(null);
 
   const randomNumber = () => {
     let multiplies = [];
@@ -26,6 +28,7 @@ export default function Game({ userInfo }) {
   };
 
   function handleStart() {
+    clearInterval(timerId);
     console.log("handleStart triggered");
     setNumber(randomNumber());
     setStartGame(false);
@@ -33,6 +36,21 @@ export default function Game({ userInfo }) {
     setAttempts(20);
     setTime(60);
     setGuess("");
+
+    // Set up the timer
+    const newTimerId = setInterval(() => {
+      setTime((prevTime) => {
+        if (prevTime <= 1) {
+          clearInterval(newTimerId);
+          handleEndgame();
+          return 0;
+        }
+        return prevTime - 1;
+      });
+    }, 1000);
+
+    // Store the timerId in state so we can clear it later if needed
+    setTimerId(newTimerId);
   }
   function handleHint() {
     if (number < 50) {
@@ -90,8 +108,10 @@ function handleSubmit() {
     setPlayGame(true);
   }
   function handleEndgame() {
-    setStartGame(true);
+    clearInterval(timerId);
     setPlayGame(false);
+    setEndGame(true);
+
   }
 
 
