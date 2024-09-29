@@ -5,18 +5,28 @@ import { LinearGradient } from 'expo-linear-gradient';
 import Start from './Screens/Start';
 import Colors from './helper';
 import Confirm from './Screens/Confirm';
+import Game from './Screens/Game';
 import { useState } from 'react';
 
 export default function App() {
   const [confirmVisibility, setConfirmVisibility] = useState(false);
   const [user, setUser] = useState([]);
+  const [gameVisibility, setGameVisibility] = useState(false);
   function handleRegister([name, email, phone]) {
-    console.log("Register button pressed");    
     setConfirmVisibility(true);
     setUser([name, email, phone]);
   }
   function handleGoback() {
     setConfirmVisibility(false);
+  }
+  function handleContinue() {
+    setConfirmVisibility(false);
+    setGameVisibility(true);
+  }
+  if (gameVisibility) {
+    return (
+      <Game userInfo={user}/>
+    );
   }
   return (
     <SafeAreaView style={styles.container}>
@@ -35,6 +45,7 @@ export default function App() {
             confirmVisibility={confirmVisibility}
             userInfo={user}
             gobackHandler={handleGoback}
+            continueHandler={handleContinue}
           />
         </View>
       </LinearGradient>

@@ -3,15 +3,18 @@ import React from 'react'
 import Colors from '../helper';
 import { LinearGradient } from 'expo-linear-gradient';
 
-export default function Confirm({confirmVisibility, userInfo, gobackHandler}) {
+export default function Confirm({confirmVisibility, userInfo, gobackHandler, continueHandler}) {
     function handleGoback() {
        gobackHandler();
+    }
+    function handleContinue() {
+       continueHandler();
     }
     
   return (
     <Modal visible={confirmVisibility} animationType="slide" transparent={true}>
-              <View style={styles.container}>
-    <LinearGradient colors={[Colors.backgroundTop, Colors.backgroundBottom]} style={styles.background}>
+      <View style={styles.container}>
+        <LinearGradient colors={[Colors.backgroundTop, Colors.backgroundBottom]} style={styles.background}>
 
         <View style={styles.innerContainer}>
           <Text style={styles.text}>Hello {userInfo[0]}</Text>
@@ -20,15 +23,14 @@ export default function Confirm({confirmVisibility, userInfo, gobackHandler}) {
           <Text style={styles.text}>{userInfo[2]}</Text>
           <Text style={styles.text}>If it is not correct, please go back and edit them.</Text>
 
-        <View style={styles.buttonArea }>
-            <Button title="Go back" color={Colors.cancel} onPress={handleGoback}/>
-            <Button title="Continue" color={Colors.ok}/>
-
-        </View>
+          <View style={styles.buttonArea }>
+              <Button title="Go back" color={Colors.cancel} onPress={handleGoback}/>
+              <Button title="Continue" color={Colors.ok} onPress={handleContinue}/>
+          </View>
         </View>        
 
         </LinearGradient>
-              </View>
+      </View>
     </Modal>
   )
 }
